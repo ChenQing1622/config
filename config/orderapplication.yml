@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: order-service
+    
+#server:
+#  port: 8201
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka
+#defaultZone，置默认位，可以修改为具体地理位置，比如：beiJing, shangHai, shenZhen 等，表示 eureka 服务器的部署位置
+
+#手动开启hystrix
+feign:
+  hystrix:
+    enabled: true
+#暴露检测点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream 
+#item-service 高可用(配置两台)
+---
+spring:
+  profiles: order1
+  
+server:
+  port: 8201
+---
+spring:
+  profiles: order2
+
+server:
+  port: 8202
